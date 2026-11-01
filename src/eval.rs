@@ -9,7 +9,7 @@ use std::{
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 
-use crate::{
+use knowledge::{
     config::Config,
     db,
     error::{Error, Result},
@@ -467,9 +467,9 @@ pub fn run(config: &Config, fixture: &Path) -> Result<Envelope<Value>> {
 #[cfg(feature = "full")]
 pub fn compare(config: &Config, fixture: &Path) -> Result<Envelope<Value>> {
     let mut light_config = config.clone();
-    light_config.profile = crate::config::Profile::Light;
+    light_config.profile = knowledge::config::Profile::Light;
     let mut full_config = config.clone();
-    full_config.profile = crate::config::Profile::Full;
+    full_config.profile = knowledge::config::Profile::Full;
     let light = run(&light_config, fixture)?;
     let full = run(&full_config, fixture)?;
     if light.index_generation != full.index_generation
@@ -536,7 +536,7 @@ mod tests {
             sha256: String::new(),
             mtime: 0.0,
             size: 0,
-            meta: crate::model::Metadata {
+            meta: knowledge::model::Metadata {
                 id: "DUP".into(),
                 ..Default::default()
             },
@@ -577,7 +577,7 @@ mod tests {
                 .map(|key| {
                     (
                         key.into(),
-                        crate::config::Root {
+                        knowledge::config::Root {
                             path: fixtures.join(key).canonicalize().unwrap(),
                             role: key.into(),
                             trust: "synthetic".into(),

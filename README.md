@@ -82,7 +82,9 @@ Answers retrieve an evidence pack and send a delimited, escaped untrusted-data p
 
 ## Components boundary
 
-Scribe is a product repository, not an ecosystem, and it is not a workspace package. Its engine (`db`, `ingest`, `retrieve`, `vector_index`, `context`, `verify`, `mcp`) is the local implementation of the knowledge-index foundation behind [`P-KNOWLEDGE`](../../project-planning/projects/knowledge-base.md). Component code lives in [`Components/`](../../Components/README.md) ([D-0012](../../project-planning/decisions/0012-component-repositories.md)); Scribe stays a single crate until another consumer (AgentWorks, Atlas) needs the index as a library, at which point the engine is extracted against a versioned contract rather than copied.
+Scribe is a product repository, not an ecosystem, and it is not a workspace package. Its engine — storage, ingest, retrieval, context packs, graph and the MCP server — was extracted on 2026-11-01 to [`Components/crates/knowledge`](../../Components/crates/knowledge/src/lib.rs) ([D-0012](../../project-planning/decisions/0012-component-repositories.md)). This repository keeps the CLI (`src/main.rs`), the product evaluation harness (`src/eval.rs`, `src/answer_eval.rs`) and the fixtures and config documents they pin.
+
+`kb` depends on `knowledge` by path and re-exports it, so commands, configuration and MCP behaviour are unchanged. Tests and unit tests remain split: engine tests live with the package, product tests here.
 
 ## Read-only MCP
 

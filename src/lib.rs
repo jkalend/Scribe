@@ -1,21 +1,11 @@
-#[cfg(feature = "full")]
-pub mod answer;
+//! Command-line front end over the [`knowledge`] crate.
+//!
+//! The engine, storage and MCP server live in `knowledge`; this crate owns the
+//! CLI surface and the product-side evaluation harnesses (`eval`, `answer_eval`)
+//! that pin this repository's lock file and fixtures.
+
+pub use knowledge::*;
+
 #[cfg(feature = "full")]
 pub mod answer_eval;
-pub mod config;
-pub mod context;
-pub mod db;
-#[cfg(feature = "full")]
-pub mod embed;
-pub mod error;
 pub mod eval;
-pub mod full_config;
-pub mod graph;
-pub mod ingest;
-pub mod mcp;
-pub mod model;
-pub mod retrieve;
-#[cfg(feature = "full")]
-mod vector_index;
-#[cfg(feature = "full")]
-pub mod verify;

@@ -959,6 +959,19 @@ name = "kb"
 version = "0.4.0"
 dependencies = [
  "clap",
+ "knowledge",
+ "rusqlite",
+ "serde",
+ "serde_json",
+ "sha2",
+ "tempfile",
+ "toml",
+]
+
+[[package]]
+name = "knowledge"
+version = "0.1.0"
+dependencies = [
  "pulldown-cmark",
  "reqwest",
  "rmcp",
@@ -968,7 +981,6 @@ dependencies = [
  "serde",
  "serde_json",
  "sha2",
- "tempfile",
  "tokenizers",
  "tokio",
  "toml",

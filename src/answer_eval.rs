@@ -1,6 +1,6 @@
 //! Mechanical diagnostics are not semantic judgments. Human reviews bind to the
 //! exact stable answer payload hash; no generator or judge grades its own output.
-use crate::{
+use knowledge::{
     config::Config,
     db,
     error::{Error, Result},
@@ -432,13 +432,13 @@ pub fn run(
     let mut report = config.envelope(generation, Value::Null);
     let mut contracts = None;
     for case in &cases {
-        crate::mcp::checkpoint()?;
+        knowledge::mcp::checkpoint()?;
         let expected: BTreeSet<String> = case
             .expected_sources
             .iter()
             .map(|s| crate::eval::resolve_label(s, &docs).map(|d| d.key.clone()))
             .collect::<Result<_>>()?;
-        let output = crate::answer::run(
+        let output = knowledge::answer::run(
             config,
             &AnswerRequest {
                 question: case.question.clone(),
