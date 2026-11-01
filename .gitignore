@@ -1,0 +1,15 @@
+/target/
+/.kb/
+/private/
+/config.local.toml
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.db
+*.db-wal
+*.db-shm
+.env*
+/models/

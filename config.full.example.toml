@@ -1,0 +1,61 @@
+# Opt-in full-capable binary; runtime still defaults to LIGHT.
+# Edit all paths, endpoint and model aliases. No credentials or models are bundled.
+profile = "light"
+
+[index]
+database = "/home/you/.local/share/scribe/full-index.sqlite"
+
+[roots.notes]
+path = "/home/you/notes"
+role = "notes"
+trust = "user-configured"
+
+[limits]
+timeout_ms = 60000
+
+[full]
+index_timeout_ms = 900000
+
+[full.embedding]
+provider = "litellm"
+base_url = "https://your-litellm.example/v1"
+api_key_env = "LITELLM_API_KEY"
+model = "your-embedding-alias"
+license = "provider-managed; verify applicable terms"
+dimensions = 768 # MUST match the selected embedding model.
+query_prefix = "" # Set the selected model's documented query transform.
+document_prefix = "" # Set its documented document transform separately.
+max_input_bytes = 32768
+max_input_tokens = 8192
+context_window = 8192
+timeout_ms = 60000
+
+[full.generator]
+provider = "litellm"
+base_url = "https://your-litellm.example/v1"
+api_key_env = "LITELLM_API_KEY"
+model = "your-generation-alias"
+license = "provider-managed; verify applicable terms"
+prompt_template = "openai-chat-v1"
+max_input_bytes = 60000
+max_input_tokens = 8192
+context_window = 16384
+max_output_tokens = 4096
+temperature = 0.0
+seed = 0
+timeout_ms = 60000
+
+[full.retrieval]
+fusion = "rrf" # Alternative: weighted_score (per-leg minmax normalization).
+lexical_weight = 0.5
+candidates = 100
+rrf_k = 60
+
+# Optional pinned tokenizer for exact local counting of the serialized input:
+# tokenizer_path = "/absolute/private/tokenizer.json"
+# tokenizer_sha256 = "<actual independently computed SHA-256>"
+# These belong in the corresponding embedding/generator table, not retrieval.
+# LiteLLM upstream chat framing is not counted by a local tokenizer.
+# Ollama uses provider="ollama", a literal-loopback URL with an explicit port,
+# installed model identity, pinned tokenizer_path/tokenizer_sha256, and a matching
+# prompt_template="chatml-v1" or "plain-v1" for raw generation.
