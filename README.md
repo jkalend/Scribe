@@ -82,7 +82,7 @@ Answers retrieve an evidence pack and send a delimited, escaped untrusted-data p
 
 ## Components boundary
 
-Scribe is a product repository, not an ecosystem, and it is not a workspace package. Its engine — storage, ingest, retrieval, context packs, graph and the MCP server — was extracted on 2026-11-01 to [`Components/crates/knowledge`](../../Components/crates/knowledge/src/lib.rs) ([D-0012](../../project-planning/decisions/0012-component-repositories.md)). This repository keeps the CLI (`src/main.rs`), the product evaluation harness (`src/eval.rs`, `src/answer_eval.rs`) and the fixtures and config documents they pin.
+Scribe is a product repository, not an ecosystem, and it is not a workspace package. Its engine — storage, ingest, retrieval, context packs, graph and the MCP server — was extracted on 2026-11-01 to [`Components/crates/knowledge`](https://github.com/jkalend/Components/blob/main/crates/knowledge/src/lib.rs) ([D-0012](https://github.com/jkalend/project-planning/blob/main/decisions/0012-component-repositories.md)). This repository keeps the CLI (`src/main.rs`), the product evaluation harness (`src/eval.rs`, `src/answer_eval.rs`) and the fixtures and config documents they pin.
 
 `kb` depends on `knowledge` by path and re-exports it, so commands, configuration and MCP behaviour are unchanged. Tests and unit tests remain split: engine tests live with the package, product tests here.
 
@@ -150,3 +150,14 @@ Full totals include two isolated-child checks for credential/proxy environment s
 - A separate explicitly configured private instance was indexed and produced an answer whose returned source hash, line span and normalized quote were independently checked against the actual Markdown file. Its config, corpus, index and evaluation reports are not distributed.
 - Regression coverage includes failed embedding-batch rollback, edit/rename/delete followed by light invalidation and full refresh, filtered-out exact IDs without unrelated dense fallback, incoming one-sided conflicts, and unrelated conflicts that must not censor independently cited claims.
 - Live inference was verified through LiteLLM. Ollama was exercised against synthetic loopback protocol fixtures, not an installed local model. No artifact/runtime attestation, semantic entailment, performance improvement, human-reviewed answer-release acceptance, or named desktop-client compatibility is claimed.
+
+## Verification record — 2026-11-04
+
+Post-extraction tree: this crate consumes `knowledge` from `Components/crates/knowledge` by path. Rust 1.98.1, locked dependencies, Windows, no live provider or private instance:
+
+| Command | Result |
+|---|---:|
+| `cargo test --locked` | 21 passed |
+| `cargo test --locked --features full` | 71 passed, 2 ignored |
+
+The counts cover this repository's CLI, product evaluation harness, fixtures, MCP and provider suites; engine tests now run in the Components workspace. Total contract coverage is unchanged by the extraction, but the per-repository numbers in the 2026-10-21/22 records describe the pre-extraction tree.
