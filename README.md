@@ -168,6 +168,13 @@ Post-extraction tree: this crate consumes `knowledge` from `Components/crates/kn
 
 The counts cover this repository's CLI, product evaluation harness, fixtures, MCP and provider suites; engine tests now run in the Components workspace. Total contract coverage is unchanged by the extraction, but the per-repository numbers in the 2026-10-21/22 records describe the pre-extraction tree. Package metadata now carries `license = "Apache-2.0"` and the public repository URL; no crate was published.
 
+## Verification record — 2026-11-05
+
+- The `knowledge` engine was released as Git tag `knowledge-v0.1.0` (commit `24cf178`) with Apache-2.0 metadata; `cargo test -p knowledge --locked` and `--features full` pass (19 tests each).
+- `kb` now consumes `git = "https://github.com/jkalend/Components", tag = "knowledge-v0.1.0"`; `Cargo.lock` records commit `24cf178`. The 2026-11-04 path dependency no longer applies.
+- A fresh clone of this repository with no sibling `Components` checkout ran `cargo build --locked` and `cargo install --path . --locked` successfully, resolving `knowledge` from the tag; the installed `kb 0.4.0` runs.
+- `cargo test --locked` 21 passed; `cargo test --locked --features full` 71 passed, 2 ignored.
+
 ## License
 
 Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE).
