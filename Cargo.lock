@@ -971,6 +971,7 @@ dependencies = [
 [[package]]
 name = "knowledge"
 version = "0.1.0"
+source = "git+https://github.com/jkalend/Components?tag=knowledge-v0.1.0#24cf17884723cfc6bf28a50cda9a1928d08538a4"
 dependencies = [
  "pulldown-cmark",
  "reqwest",
