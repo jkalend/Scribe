@@ -6,7 +6,7 @@ The `full` feature adds embeddings, hybrid retrieval, and mechanically verified 
 
 ## Build and configure
 
-Requires Rust 1.89+ and the platform C build tools for bundled SQLite (Visual Studio C++ Build Tools on Windows; a C compiler on Linux). `Cargo.lock` pins dependencies; the reviewed parser/SQLite/MCP releases are pinned in `Cargo.toml` too.
+Requires Rust 1.89+ and the platform C build tools for bundled SQLite (Visual Studio C++ Build Tools on Windows; a C compiler on Linux). `Cargo.lock` pins dependencies; this manifest pins the SQLite binding (`rusqlite`), while the reviewed parser and MCP releases are pinned in the `knowledge` crate's manifest. The engine is consumed by path during co-development, so build with a `Components/` checkout beside `Ecosystems/`; D-0012 moves consumers to a pinned tag or package feed after the first component release.
 
 ```sh
 cargo build --release --locked
@@ -84,7 +84,7 @@ Answers retrieve an evidence pack and send a delimited, escaped untrusted-data p
 
 Scribe is a product repository, not an ecosystem, and it is not a workspace package. Its engine — storage, ingest, retrieval, context packs, graph and the MCP server — was extracted on 2026-11-01 to [`Components/crates/knowledge`](https://github.com/jkalend/Components/blob/main/crates/knowledge/src/lib.rs) ([D-0012](https://github.com/jkalend/project-planning/blob/main/decisions/0012-component-repositories.md)). This repository keeps the CLI (`src/main.rs`), the product evaluation harness (`src/eval.rs`, `src/answer_eval.rs`) and the fixtures and config documents they pin.
 
-`kb` depends on `knowledge` by path and re-exports it, so commands, configuration and MCP behaviour are unchanged. Tests and unit tests remain split: engine tests live with the package, product tests here.
+`kb` depends on `knowledge` by path and re-exports it, so commands, configuration and MCP behaviour are unchanged. Tests and unit tests remain split: engine tests live with the package, product tests here. A path source is not content-pinned by `Cargo.lock`, so record the `Components` revision used for a build; D-0012 replaces the path with a pinned tag or package-feed entry after the first component release.
 
 ## Read-only MCP
 
