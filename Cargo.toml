@@ -4,6 +4,8 @@ version = "0.4.0"
 edition = "2024"
 rust-version = "1.89"
 description = "Local Markdown retrieval and cited context CLI over the knowledge crate"
+license = "Apache-2.0"
+repository = "https://github.com/jkalend/Scribe"
 
 [features]
 default = []

@@ -160,4 +160,10 @@ Post-extraction tree: this crate consumes `knowledge` from `Components/crates/kn
 | `cargo test --locked` | 21 passed |
 | `cargo test --locked --features full` | 71 passed, 2 ignored |
 
-The counts cover this repository's CLI, product evaluation harness, fixtures, MCP and provider suites; engine tests now run in the Components workspace. Total contract coverage is unchanged by the extraction, but the per-repository numbers in the 2026-10-21/22 records describe the pre-extraction tree.
+The counts cover this repository's CLI, product evaluation harness, fixtures, MCP and provider suites; engine tests now run in the Components workspace. Total contract coverage is unchanged by the extraction, but the per-repository numbers in the 2026-10-21/22 records describe the pre-extraction tree. Package metadata now carries `license = "Apache-2.0"` and the public repository URL; no crate was published.
+
+## License
+
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE).
+
+Copyright 2026 jkalend. Third-party dependencies retain their own licenses.
